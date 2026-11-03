@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import { load } from 'cheerio'
+import { applyTheme } from './themes.js'
 
 export async function applyTemplate(content, templatePath) {
   const template = await fs.readFile(templatePath, 'utf8')
@@ -23,5 +24,7 @@ export async function applyTemplate(content, templatePath) {
       }
     }
   })
-  return template.replace('{{{content}}}', content)
+  const theme = $('[data-article-theme]').first().attr('data-article-theme')
+  const styled = theme ? applyTheme(content, theme) : content
+  return template.replace('{{{content}}}', styled)
 }

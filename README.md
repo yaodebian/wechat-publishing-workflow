@@ -87,6 +87,36 @@ npm run publish -- ./articles/example --media-id EXISTING_DRAFT_ID
 
 命令名 `publish` 在这里仅指写入草稿箱，不会群发或正式发布。CLI 返回的成功只表示接口写入成功；仍须回读和检查微信真实预览。
 
+## 排版模板：给 AI 的选择引导
+
+模板只改变呈现，不提供文章结构、章节文案、封面或配图。不要为了适配模板增删内容；用户已指定样式时优先遵从。
+
+| 模板 | 适合内容 | 呈现特点 |
+| --- | --- | --- |
+| `default.html` | 通用文章、沿用当前排版 | 保持既有绿线标题与正文样式 |
+| `essay.html` | 已使用此模板的历史文章 | 保持既有外框；正文仍由原渲染器控制 |
+| `technical.html` | 技术教程、机制解释 | 蓝色层级、17px 正文，保留代码高亮 |
+| `reading.html` | 观点随笔、经验复盘 | 暖棕色、17px 正文、较舒展行距，标题无底线 |
+| `business.html` | 商业分析、产品对比 | 灰绿配色、16px 正文、14px 表格，强调比较信息 |
+
+**给 AI：** 新文章先选与阅读任务匹配的模板，再预览；已绑定模板的文章不擅自换风格。表格列多或代码行长时，仍须逐项检查手机可读性，不能用缩小字体来宣告通过。主题配色不替代封面和配图的独立设计。更换模板后重新生成预览和发布检查记录；通过本地预览不能代表微信平台验收通过。
+
+命令行选择（路径相对于执行命令的目录）：
+
+```bash
+npm run preview -- /absolute/path/to/article --template ./templates/technical.html
+```
+
+文章固定使用时，在 front matter 的 `template` 字段填写**相对于文章目录**的模板路径。例如文章位于本仓库的 `articles/example/index.md`：
+
+```yaml
+template: ../../templates/technical.html
+```
+
+也可在本机 `.env` 中设置 `WECHAT_TEMPLATE=./templates/technical.html` 作为默认值；不修改示例配置中的用户偏好。选择顺序为：命令行 `--template` → 文章 `template` → 本机默认模板。
+
+新增主题使用外框的 `data-article-theme` 选择器，在构建时将标题、段落、列表、引用、表格和链接的样式内联到正文中，不依赖微信保留 `<style>`。自定义模板不带该属性时保持原有行为；主题定义见 `src/themes.js`。已有 `default` 和 `essay` 的输出行为保持兼容。
+
 ## 开发与后续优化
 
 ```bash
@@ -94,7 +124,7 @@ npm test
 npm run check
 ```
 
-源码位于 `src/`，模板位于 `templates/`。默认模板使用 17px 字号，另提供 16px 的 `templates/essay.html`；可用本机 `.env` 中的 `WECHAT_TEMPLATE=./templates/essay.html` 选择，或在文章 front matter 中配置相对于文章目录的 `template` 路径。模板只保留正文占位符 `{{{content}}}`，不添加署名、口号或其他新文案，也不叠加正文外层左右留白。
+源码位于 `src/`，模板位于 `templates/`。默认模板的正文使用 17px 字号，`templates/essay.html` 保留历史外框；可用本机 `.env` 中的 `WECHAT_TEMPLATE=./templates/essay.html` 选择，或在文章 front matter 中配置相对于文章目录的 `template` 路径。模板只保留正文占位符 `{{{content}}}`，不添加署名、口号或其他新文案，也不叠加正文外层左右留白。
 
 当前版本保留人工/AI验收环节。后续可持续改善图片工具适配、预览证据采集、草稿查重及回读自动化。欢迎通过 Issue 和 Pull Request 反馈问题；请只提供脱敏示例，不上传真实凭证或私有文章。
 
