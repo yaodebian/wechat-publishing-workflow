@@ -70,6 +70,7 @@ export async function publishArticle(articlePath, config, options = {}) {
     content,
     content_source_url: options.sourceUrl ?? article.sourceUrl,
     thumb_media_id: thumbMediaId,
+    show_cover_pic: 0,
     need_open_comment: article.needOpenComment,
     only_fans_can_comment: article.onlyFansCanComment
   }

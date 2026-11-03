@@ -58,6 +58,7 @@ test('publishes local images, a cover, and the rendered article through the clie
   assert.match(calls[2][1].content, /https:\/\/mmbiz\.qpic\.cn\/inline\.jpg/)
   assert.equal(calls[2][1].thumb_media_id, 'cover-media-id')
   assert.equal(calls[2][1].title, '流水线测试')
+  assert.equal(calls[2][1].show_cover_pic, 0)
 })
 
 test('requires an article-specific cover when no fallback is configured', async () => {
