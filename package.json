@@ -1,0 +1,29 @@
+{
+  "name": "wechat-publishing-workflow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Render Markdown articles and publish them to a WeChat Official Account draft box.",
+  "scripts": {
+    "publish": "node src/cli.js publish",
+    "preview": "node src/cli.js preview",
+    "test": "node --test",
+    "check": "node --check src/cli.js",
+    "lock:body": "node scripts/lock-body.js",
+    "review:publication": "node scripts/create-publication-review.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.2",
+    "commander": "^14.0.1",
+    "dotenv": "^17.2.3",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "mermaid": "^11.12.0",
+    "playwright-core": "^1.56.1",
+    "sharp": "^0.34.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
