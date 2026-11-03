@@ -94,7 +94,7 @@ npm test
 npm run check
 ```
 
-源码位于 `src/`，模板位于 `templates/`。模板只保留正文占位符 `{{{content}}}`，不添加署名、口号或其他新文案，也不叠加正文外层左右留白。
+源码位于 `src/`，模板位于 `templates/`。默认模板使用 17px 字号，另提供 16px 的 `templates/essay.html`；可用本机 `.env` 中的 `WECHAT_TEMPLATE=./templates/essay.html` 选择，或在文章 front matter 中配置相对于文章目录的 `template` 路径。模板只保留正文占位符 `{{{content}}}`，不添加署名、口号或其他新文案，也不叠加正文外层左右留白。
 
 当前版本保留人工/AI验收环节。后续可持续改善图片工具适配、预览证据采集、草稿查重及回读自动化。欢迎通过 Issue 和 Pull Request 反馈问题；请只提供脱敏示例，不上传真实凭证或私有文章。
 
