@@ -102,6 +102,11 @@ export function renderMarkdown(markdown) {
     const code = $(node)
     code.attr('style', 'display:block;max-width:100%;padding:0;background:transparent;color:inherit;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;')
 
+    if (code.hasClass('language-text') || code.hasClass('language-plaintext')) {
+      code.parent().css({ background: '#f3f6fa', color: '#243447', border: '1px solid #dbe4ef' })
+      code.css({ 'font-size': '15px', 'line-height': '1.8' })
+    }
+
     // 微信编辑器会过滤部分 white-space 样式，也可能吞掉高亮 span 之间的普通空格。
     // 用显式换行和不换行空格保存源码格式，并把高亮颜色内联，避免依赖 class 样式。
     preserveCodeWhitespace(node)

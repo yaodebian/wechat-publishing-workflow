@@ -60,3 +60,12 @@ test('does not rewrite strong-like markers inside fenced or inline code', () => 
   assert.match(html, /\*\*不是加粗\*\*/)
   assert.match(html, /\*\*也不是\*\*中文/)
 })
+
+test('renders copyable plaintext prompts in a readable light block without losing content', () => {
+  const html = renderMarkdown('```text\n1. 不要改写正文。\n2. 检查 A < B 与链接 https://example.com/a?q=1&b=2\n```')
+  assert.match(html, /font-size: 15px/)
+  assert.match(html, /background: #f3f6fa/)
+  assert.match(html, /不要改写正文/)
+  assert.match(html, /&lt;/)
+  assert.match(html, /<br>/)
+})
